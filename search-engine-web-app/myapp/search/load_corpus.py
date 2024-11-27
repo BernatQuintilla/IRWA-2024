@@ -15,6 +15,7 @@ except:
     stop_words = set(stopwords.words("english"))
 _corpus = {}
 
+# Function from previous labs
 def build_terms(line):
     line= line.lower()
     line= line.split()
@@ -32,23 +33,23 @@ def load_corpus(path) -> list[Document]:
      in results, stats, etc.
     :param path:
     :return:
-    """
+    """    
     try:
        # If preloaded, load the tweets
-        _corpus = pickle.load(open("loaded_corpus_processed.pickle", 'rb'))
-        print("CORPUS LOADED SUCCESSFULY FROM MEMORY")
+        _corpus = pickle.load(open("loaded_corpus_processed.pkl", 'rb'))
+        print("CORPUS LOADED FROM MEMORY")
         return _corpus
     except:
         _corpus = {}
+        print("PROCESSING CORPUS")
         df = _load_corpus_as_dataframe(path)
         # Process files
         df["Tweet Processed"] = df["Tweet"].apply(build_terms) 
-        # TODO: Enxtend
-        # df["Keywords Extended"] = df["Tweet Processed"] (word2vec expand query)
         df.apply(_row_to_doc_dict, axis=1)
-        print("CORPUS LOADED SUCCESSFULY")
-        with open("loaded_corpus_processed.pickle", 'wb') as handle:
-            pickle.dump(_corpus, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        print("CORPUS LOADED")
+        with open("loaded_corpus_processed.pkl", 'wb') as handle:
+            pickle.dump(_corpus, handle)
+        print("CORPUS DUMPED ON PICKLE")
     return _corpus
 
 
@@ -62,10 +63,8 @@ def _load_corpus_as_dataframe(path):
     tweets_df = _clean_hashtags_and_urls(tweets_df)
     # Rename columns to obtain: Tweet | Username | Date | Hashtags | Likes | Retweets | Url | Language
     corpus = tweets_df.rename(
-        columns={"id": "Id", "content": "Tweet", "username": "Username", "date": "Date",
-                 "likeCount": "Likes",
-                 "retweetCount": "Retweets", "lang": "Language"})
-    # select only interesting columns
+        columns={"id": "Id", "content": "Tweet", "username": "Username", "date": "Date", "likeCount": "Likes", "retweetCount": "Retweets", "lang": "Language"})
+          # select only interesting columns
     filter_columns = ["Id", "Tweet", "Username", "Date", "Hashtags", "Likes", "Retweets", "Url", "Language"]
     corpus = corpus[filter_columns]
     return corpus
@@ -81,23 +80,16 @@ def _load_tweets_as_dataframe(json_data):
     return data
 
 def _build_url(row):
-    url = ""
-    try:
-        for possible_url in row["url"]:
-            if row["id"] in possible_url:
-                url = possible_url  # tweet URL
-    except:
-        pass
-    return url
+    return "https://x.com/"+row["username"]+"/status/"+str(row["id"])
 
 
 def _clean_hashtags_and_urls(df):
-    df["Hashtags"] = df["content"].apply(lambda row : [words for words in row.split() if words[0]=='#'])
-    # The below line raises errors, update it with a simpler one
+    # The below line raises errors, we update it with a simpler one
     # df["Hashtags"] = df["hashtags"].apply(_build_tags)
+    df["Hashtags"] = df["content"].apply(lambda row : [words for words in row.split() if words[0]=='#'])
+    
+    # df["Url"] = "DONE: get url from json"
     df["Url"] = df.apply(lambda row: _build_url(row), axis=1)
-    # df["Url"] = "TODO: get url from json"
-    # df.drop(columns=["entities"], axis=1, inplace=True)
     return df
 
 
@@ -131,7 +123,7 @@ def load_tweets_as_dataframe3(json_data):
     # Load the JSON object into a DataFrame.
     dataframe = pd.DataFrame(json_data).transpose()
     # select only interesting columns
-    filter_columns = ["id", "content", "date", "retweetCount", "likeCount", "lang"] #, "entities"]
+    filter_columns = ["id", "content", "date", "retweetCount", "likeCount", "lang", "user_id"] #, "entities"]
     dataframe = dataframe[filter_columns]
     return dataframe
 
@@ -141,4 +133,4 @@ def _row_to_doc_dict(row: pd.Series):
                                   row['Tweet'][0:100], row['Tweet'], 
                                   row['Date'],
                                   row['Likes'], row['Retweets'],
-                                  row['Url'], row['Hashtags'], row["Tweet Processed"])
+                                  row['Url'], row['Hashtags'], row["Tweet Processed"], row["Username"])

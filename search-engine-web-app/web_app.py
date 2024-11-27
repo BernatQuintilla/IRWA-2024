@@ -67,9 +67,9 @@ def index():
 
     print(session)
 
-    return render_template('index.html', page_title="Welcome")
+    return render_template('index.html', page_title="IRWA - Lab 4")
 
-
+# Quan s'apreta el cercador
 @app.route('/search', methods=['POST'])
 def search_form_post():
     search_query = request.form['search-query']
@@ -87,7 +87,7 @@ def search_form_post():
 
     return render_template('results.html', results_list=results, page_title="Results", found_counter=found_count)
 
-
+# Quan s'apreta el botó per triar un dels resultats
 @app.route('/doc_details', methods=['GET'])
 def doc_details():
     # getting request parameters:
@@ -116,7 +116,7 @@ def doc_details():
 
     return render_template('doc_details.html')
 
-
+# Les stats no sé si arribarem
 @app.route('/stats', methods=['GET'])
 def stats():
     """
@@ -138,7 +138,6 @@ def stats():
     return render_template('stats.html', clicks_data=docs)
     # ### End replace with your code ###
 
-
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     visited_docs = []
@@ -154,7 +153,8 @@ def dashboard():
     for doc in visited_docs: print(doc)
     return render_template('dashboard.html', visited_docs=visited_docs)
 
-
+# La part de sentiment no la fem.
+"""
 @app.route('/sentiment')
 def sentiment_form():
     return render_template('sentiment.html')
@@ -168,7 +168,7 @@ def sentiment_form_post():
     sid = SentimentIntensityAnalyzer()
     score = ((sid.polarity_scores(str(text)))['compound'])
     return render_template('sentiment.html', score=score)
-
+"""
 
 if __name__ == "__main__":
     app.run(port=8088, host="0.0.0.0", threaded=False, debug=True)

@@ -1,8 +1,9 @@
 import random
 
 from myapp.search.objects import ResultItem, Document
+from myapp.search.algorithms import search_in_corpus
 
-
+# TODO : canviar per fer el ranking com a lab 2/3
 def build_demo_results(corpus: dict, search_id):
     """
     Helper method, just to demo the app
@@ -25,7 +26,7 @@ def build_demo_results(corpus: dict, search_id):
     res.sort(key=lambda doc: doc.ranking, reverse=True)
     return res
 
-
+# TODO : suposo que es poden filtrar els resultats diferent
 class SearchEngine:
     """educational search engine"""
 
@@ -36,6 +37,7 @@ class SearchEngine:
         ##### your code here #####
         results = build_demo_results(corpus, search_id)  # replace with call to search algorithm
 
+# TODO : la funció està a myapp/search/algorithms.py
         # results = search_in_corpus(search_query)
         ##### your code here #####
 
