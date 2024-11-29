@@ -1,11 +1,12 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-def search_in_corpus(query: str, corpus: dict):
+def search_in_corpus(query: str, corpus: dict, score_threshold=0.1):
     """
     Perform a search in the corpus using TF-IDF and cosine similarity.
     :param query: Search query string.
     :param corpus: Dictionary of Document objects.
+    :param score_threshold: Minimum score to filter documents.
     :return: A list of ranked results (document IDs and scores).
     """
     # Extract document IDs and processed content from the corpus
@@ -24,15 +25,22 @@ def search_in_corpus(query: str, corpus: dict):
     doc_vectors = tfidf_matrix[:-1]  # All other vectors are documents
     similarity_scores = cosine_similarity(query_vector, doc_vectors).flatten()
 
-    # Pair document IDs with their similarity scores and sort by score
-    ranked_results = sorted(
-        zip(doc_ids, similarity_scores),
-        key=lambda x: x[1],
-        reverse=True
-    )
+    # Tokenize the query for matching terms in documents
+    query_tokens = set(query.lower().split())
 
-    # Return the ranked results
+    # Filter and rank the results based on score and query term presence
+    ranked_results = []
+    for doc_id, score in zip(doc_ids, similarity_scores):
+        if score > score_threshold:  # Filter by score threshold
+            document_tokens = set(corpus[doc_id].processed)  # Document's tokens
+            if query_tokens & document_tokens:  # Check if any query term is in the document
+                ranked_results.append((doc_id, score))
+
+    # Sort the results by score in descending order
+    ranked_results.sort(key=lambda x: x[1], reverse=True)
+
     return ranked_results
+
 
 
 
