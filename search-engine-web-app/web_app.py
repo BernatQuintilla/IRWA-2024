@@ -17,7 +17,6 @@ from myapp.search.search_engine import SearchEngine
 def _default(self, obj):
     return getattr(obj.__class__, "to_json", _default.default)(obj)
 
-
 _default.default = JSONEncoder().default
 JSONEncoder.default = _default
 
@@ -48,8 +47,7 @@ file_path = path + "/farmers-protest-tweets.json"
 # file_path = "../../tweets-data-who.json"
 corpus = load_corpus(file_path)
 print("loaded corpus. first elem:")
-print(list(corpus.values())[0])
-
+print(corpus[1364506249291784198])
 # Home URL "/"
 @app.route('/')
 def index():
@@ -90,9 +88,6 @@ def search_form_post():
 # Quan s'apreta el botó per triar un dels resultats
 @app.route('/doc_details', methods=['GET'])
 def doc_details():
-    # getting request parameters:
-    # user = request.args.get('user')
-
     print("doc details session: ")
     print(session)
 
@@ -101,20 +96,10 @@ def doc_details():
     print("recovered var from session:", res)
 
     # get the query string parameters from request
-    clicked_doc_id = request.args["id"]
-    p1 = int(request.args["search_id"])  # transform to Integer
-    p2 = int(request.args["param2"])  # transform to Integer
-    print("click in id={}".format(clicked_doc_id))
-
-    # store data in statistics table 1
-    if clicked_doc_id in analytics_data.fact_clicks.keys():
-        analytics_data.fact_clicks[clicked_doc_id] += 1
-    else:
-        analytics_data.fact_clicks[clicked_doc_id] = 1
-
-    print("fact_clicks count for id={} is {}".format(clicked_doc_id, analytics_data.fact_clicks[clicked_doc_id]))
-
-    return render_template('doc_details.html')
+    id = request.args["id"]
+    print("ID of the result requested:"+id)
+    item = corpus[int(id)]
+    return render_template('doc_details.html', item=item)
 
 # Les stats no sé si arribarem
 @app.route('/stats', methods=['GET'])

@@ -1,7 +1,8 @@
 import datetime
 import json
 from random import random
-
+from datetime import datetime
+from dateutil.parser import parse
 from faker import Faker
 
 fake = Faker()
@@ -43,3 +44,41 @@ def load_json_file(path):
     # Parse the string into a JSON object
     json_data = json.loads(json_string)
     return json_data
+
+
+def format_date(date):
+    date = str(date)
+    nums = date.split('-')
+    year = nums[0]
+    month = nums[1]
+    match month:
+        case "01": 
+            month_name = "Jan"
+        case "02": 
+            month_name = "Feb"
+        case "03": 
+            month_name = "Mar"
+        case "04": 
+            month_name = "Apr"
+        case "05": 
+            month_name = "May"
+        case "06": 
+            month_name = "Jun"
+        case "07": 
+            month_name = "Jul"
+        case "08": 
+            month_name = "Aug"
+        case "09": 
+            month_name = "Sep"
+        case "10": 
+            month_name = "Oct"
+        case "11": 
+            month_name = "Nov"
+        case "12": 
+            month_name = "Dec"
+        case _:
+            month_name = ""
+    day = nums[2][0:2]
+    suffix = "th" if 11 <= int(day) <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(int(day) % 10, "th")
+    formatted_date = day + suffix + " " + month_name + " " + year
+    return formatted_date

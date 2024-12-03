@@ -1,16 +1,46 @@
-<!-- TODO : fer user firendly la visualització del tweet, afegir enllaç a X -->
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Detail - IRWA Search Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/custom.css') }}">
+
 </head>
 <body>
-<div><a href="#" onclick="history.go(-1)">Go Back</a></div>
-<div><a href="#" onclick="history.go(-2)">Go Back 2 pages</a></div>
-<div><a href="#" onclick="history.go(-3)">Go Back 3 pages</a></div>
-<div><a href="#" onclick="history.go(-4)">Go Back 4 pages</a></div>
-<div><a href="/stats" >Stats</a></div>
-<div><a href="/dashboard" >Dashboard</a></div>
+    <!-- Header -->
+    <div class="navbar">
+        <a href="https://www.upf.edu">
+            <img src="{{ url_for('static', filename='logo.png') }}" width="100" alt="UPF logo"/>
+        </a>
+        <div class="centered">
+            <h1> IRWA Search Engine</h1>    
+        </div>
+        <div style="right:0px">    
+            <a href="/">Go back to Main page</a>
+            <a href="/stats" onclick="alert('We have not implemented this part...')">Stats</a>
+            <a href="/dashboard" onclick="alert('We have not implemented this part...')">Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+        <div class="card">
+            <h1>{{item.title}}</h1>
+            <p class="text-muted"><strong>Date:</strong> {{item.doc_date_formated}}</p>
+            <p>{{item.description}}</p>
+            <div class="actions">
+                <a href=" {{item.url}} " class="btn-secondary">View @ X.COM</a>
+            </div>
+            <p><strong>Search score:</strong> {{item.score}}</p>
+            <p><strong>Retweets:</strong> {{item.retweets}}</p>
+            <p><strong>Likes:</strong> {{item.likes}}</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class='centered'> 24952 - Information Retrieval and Web Analytics</div>
+    </footer>
 </body>
 </html>

@@ -1,62 +1,210 @@
+/* Basic Reset */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container */
 .container {
     max-width: 800px;
-    padding-top: 10px;
-    position: relative;
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #404246;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #ff4b2b, #ff416c);
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.navbar-logo img {
+    height: 40px;
+}
+
+.navbar a {
+    color: #fff;
+    margin-left: 15px;
+    font-size: 0.9rem;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Button */
+.btn-primary,
+.btn-secondary {
+    background-color: #c8102e;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 0.95em;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #850a1e;
+}
+
+/* Search Input */
+.search-text {
+    border: 1px solid #5f6368;
+    height: 42px;
+    width: 100%;
+    max-width: 584px;
+    font-size: 0.95em;
+    padding-left: 5px;
+    margin: 0 auto 20px auto;
+}
+
+/* Card */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background: #fff;
+}
+
+h1 {
+    font-size: 2rem; /* Clear, readable size */
+    font-weight: bold; /* Regular font weight */
+    color: #eee; /* Dark gray for high contrast and readability */
+    text-align: center; /* Centered text for neat presentation */
+    margin: 20px 0; /* Spacing above and below */
+    font-family: 'Helvetica Neue', sans-serif; /* Clean and modern font */
+}
+
+h1:hover {
+    color: #8d2435; /* Change to a red color when hovered to add some emphasis */
+}
+
+
+
+.card h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card p {
+    margin-bottom: 10px;
+}
+
+/* Document Title and Links */
+.doc-title a {
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.doc-title a:hover {
+    color: #0056b3;
+}
+
+/* Cited Tweet */
+.cited a {
+    color: #6c757d;
+}
+
+.cited a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Spacing and Margin Adjustments */
+h2 {
+    margin-top: 0;
+}
+
+.pb-3 {
+    padding-bottom: 1rem;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 1.5rem 0;
+}
+
+.centered_ind {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.search-container {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px;  /* Reduced padding for less spacing */
+    border-radius: 8px; /* Subtle corner rounding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    height: 50px;
+    width: 70%;  /* Adjusted width for the input */
+    border-radius: 4px; /* Subtle rounding on input */
+    padding: 10px;
+    font-size: 1.1rem;
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.search-btn {
+    height: 50px;
+    border-radius: 4px;  /* Subtle rounding on button */
+    padding: 10px 20px;  /* Reduced padding for button */
+    font-size: 1.1rem;
+    background-color: #dc3545; /* Red button */
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #c82333;  /* Darker red on hover */
 }
 
 .centered {
     text-align: center;
-}
-
-/*.btn-primary {*/
-/*    background-color: #c8102e;*/
-/*    border: #c8102e;*/
-/*}*/
-
-.btn-primary,
-.btn-primary:active,
-.btn-primary:focus,
-.btn-primary:hover,
-.btn-primary:not(:disabled):not(.disabled):active {
-    /*color: #ffffff;*/
-    background-color: #c8102e;
-    border-color: #c8102e;
-}
-
-
-.header {
-    font-size: 1.7em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-}
-
-input[type=submit] {
-    background-color: #c8102e;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 0.95em;
-}
-
-input[type=submit]:hover {
-    background-color: #850a1e;
-}
-
-.search-text {
-    border: 1px solid #5f6368;
-    box-shadow: none;
-    z-index: 3;
-    height: 42px;
-    margin: 0 auto;
-    width: auto;
-    min-width: 300px;
-    max-width: 584px;
-    font-size: 0.95em;
-    adding-left: 5px;
+    margin: 10px auto; /* Less vertical spacing */
+    padding: 0;
 }

@@ -1,24 +1,52 @@
-<!-- TODO : mirar què es pot canviar d'aparença (és la llista de resultats)-->
 {% extends "base.html" %}
 {% block page_title %}{{ page_title }}{% endblock %}
 {% block content %}
-    Found <strong>{{ found_counter }}</strong> results...
-    <hr>
-    {% for item in results_list %}
-        <div class="pb-3">
-            <div class="doc-title">
-                <a href="{{ item.url }}">{{ item.title }}...
-                </a>
-            </div>
-            <div class="cited">
-                <cite> <a href="{{ item.url }}">{{ item.url }}</a></cite>
-            </div>
-            <div class="doc-desc">
-                {{ item.doc_date }} — {{ item.description }}
-            </div>
+    <!-- Search Bar (Visible After Search) -->
+    <div class="search-container text-center mb-4">
+        <form class="d-flex justify-content-center" method="POST" onSubmit='return validate();' action="/search">
+            <input class="form-control me-2 search-input" name="search-query" type="search" placeholder="Do another search" aria-label="Search" autofocus="autofocus" value="{{ request.form.get('search-query', '') }}">
+            <button class="btn btn-danger search-btn" type="submit">Search</button>
+            <input name="upf-irwa-hidden" type="hidden" value="123">
+        </form>
+    </div>   
 
-        </div>
-
-    {% endfor %}
+    <!-- Results -->
+    <div class="container my-4">
+        <h2>Found <strong>{{ found_counter }}</strong> results for "<em>{{ request.form.get('search-query', '') }}</em>"</h2>
+        <hr>
+        {% for item in results_list %}
+            <div class="pb-3 border-bottom">
+                <!-- Document Title -->
+                <div class="doc-title mb-1">
+                    <a href="{{ item.url }}" class="text-primary fw-bold" target="_blank" rel="noopener noreferrer">
+                        📜 - {{ item.title }}...
+                    </a>
+                </div>
+                
+                <!-- Cited Tweet -->
+                <div class="cited mb-2">
+                    <cite>
+                        <a href="{{ item.tweet_url }}" target="_blank" class="text-muted" rel="noopener noreferrer">
+                            {{ item.tweet_url }}
+                        </a>
+                    </cite>
+                </div>
+                
+                <!-- Description -->
+                <div class="doc-desc mb-2 text-secondary">
+                    <span class="text-dark fw-semibold">{{ item.doc_date_formated }}</span> — {{ item.description }}
+                </div>
+                
+                <!-- Statistics -->
+                <div class="doc-stats">
+                    <span class="me-3">
+                        ❤️ <strong>{{ item.likes }}</strong>
+                    </span>
+                    <span>
+                        🔁 <strong>{{ item.retweets }}</strong>
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
 {% endblock %}
 
